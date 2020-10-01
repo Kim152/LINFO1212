@@ -9,12 +9,12 @@
  *{
  	margin:0;
  	padding: 0;
- 	box-sizing: border-box;  
+ 	box-sizing: border-box; /**elements enfants diminuyent ca taille **/
  }
 
  body{
  	background: #fff;
- 	overflow-x: hidden;
+ 	overflow-x: hidden; /**eje x plein **/
  	font-family: 'Poppins', sans-serif;
 
  }
@@ -39,24 +39,25 @@
  	align-items: center;
  	z-index: 9999;
  }
+
  .menu .logo-box{
  	margin-left: 60px;
  	 
  }
  .menu .logo-box h1 a{
  	text-decoration: none;
- 	font-size: 35px;
- 	font-weight: 90;
+ 	font-size: 20px;
+ 	font-weight: 200;
  	color: #000000;
  	text-align: center;
  	float: center;
  	width: 40%;
- 	padding: 8px;
+ 	padding: 0px;
  	
  }
  .menu .logo-box img{
  	float: left;
- 	width: 13%;
+ 	width: 20%;
  }
  .menu .list-container{
  	margin-right: 20px;
@@ -64,27 +65,29 @@
  .menu .list-container .lists {
  	display: flex;
  }
-  .menu .list-container .lists li{
+ .menu .list-container .lists li{
  	list-style: none;
  }
  .menu .list-container .lists li a{
  	text-decoration: none;
  	margin: 0px 10px;
  	padding: 8px;
- 	color: var(--blue);
- 	border-radius: 14px;
+ 	color: #f0a500;
+ 	border-radius: 24px;
  	font-size: 16px;
  	transition: 0.3s
  }
+ /**effecto hover**/
  .menu .list-container .lists li a.activo{
- 	background: var(--red);
+ 	background: #cf7500;
  	color: #fff;
  }
 
 .menu .list-container ul li a:hover{
-    background: var(--red);
+    background: #cf7500;
     color:#fff;
 }
+
  .btn-menu > .fa-bars{
  	display: none;
  }
@@ -112,7 +115,7 @@
 	align-items: center;
 	flex-direction: column;
 }
-.img-header h1{
+.img-header .welcome h1{
 	font-style: 50px;
 	color: #fff;
 	font-weight: 200;
@@ -132,8 +135,8 @@
 .img-header .welcome > button{
 	width: 190px;
 	height: 40px;
-	background: var(--red);
-	border-radius: 80px;
+	background: #cf7500;
+	border-radius: 24px;
 	border:none;
 	outline: none;
 	font-size: 22px;
@@ -145,23 +148,17 @@
 	
 }
 
-.img-header .welcome .box{
-	position: absolute;
-	top: 90%
-	left: 50%;
-	right: 50%
-	transform: translate(-50%, -50%);
-}
-.img-header .welcome .box input.src{
+
+.img-header .welcome > input.src{
 	padding: 9px 10px 9px 32px;
 	outline: :none;
 	font-size: 18px;
 	border-radius: 15px;
-	color: #444;
-	border:3px solid #a50559;
+	color: #cf7500;
+	border:3px solid #cf7500 ;
 }
 .img-header .welcome > button:hover{
-	background:var(--black);
+	background:#ffaa71;
 }
 
 /**Acerca de **/
@@ -180,82 +177,54 @@
 .acerca-de .info h1{
 	font-size: 50px;
 	font-weight: 400;
-	color: var(--blue);
+	color: #f0a500;
 	text-align: center;
 	margin-bottom: 20px;
 }
-.acerca-de .info p{
+
+.container{
+	width: 100%
+	max-width: 12000px;
+	height: 438px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: auto;
+}
+
+.container .card{
+	width: 330px;
+	height: 430px;
+	border-radius: 8px;
+	box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+	overflow: hidden;
+	margin: 20px;
 	text-align: center;
-	font-size: 17px;
-	color: var(--black);
-	line-height: 35px;
-	margin: 10px 0px;
-}
-.acerca-de .info .about-gallery img{
-	text-align: center;
-	width: calc(40% - 10px);
-	height: 300px;
-	margin: 10px 10px;
-	object-fit: cover;
-	border-radius: 10px;
-	cursor: pointer;
-}
-/** Nuestros proyectos **/
-.our-projects{
-    position: relative;
-    width: 100%;
-    height: 100%; 
-    background: url(./covi.jpg);
-    background-attachment:fixed;
-    background-position: center;
-    background-size: cover;
-    margin-top: 100px;
-}
-.our-projects .deg-background{
-    position:absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background:rgba(0,0,0,0.8);
-}
-.our-projects .ejeZproject{
-    position: relative;
-    width: 100%;
-    height: 100%;
+	transition: all 0.25s; 
 }
 
-.our-projects .container-project{
-    width: 90%;
-    margin:auto;
-    padding-top: 100px;
-}
-.our-projects .container-project .project-title{
-    border:2px solid #fff;
-    padding:10px;
-    text-align: center;
-    width: 50%;
-    margin: auto;
-}
-.our-projects .container-project .project-title h2{
-    font-size: 40px;
-    color: #fff;
-    font-weight: normal;
+.container .card:hover{
+	transform: translateY(-15px);
+	box-shadow: 0 12px 16px rgba(0,0,0,0.2);
 }
 
-.our-projects .container-project .project-img{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 80px;
-    padding-bottom: 100px;
+.container .card img{
+	width: 330px;
+	height: 220px;
 }
 
-.our-projects .container-project .project-img img{
-  width: calc(70% - 10px);
-  margin:10px;
-  object-fit: cover;
-  border-radius: 10px;
-  cursor: pointer;
+.container .card h1{
+	font-weight: 600;
+}
+
+.container .card p{
+	padding: 0 1rem;
+	font-size: 16px;
+	font-weight: 300;
+}
+
+.container .card a{
+	font-weight: 500;
+	text-decoration: none;
+	color: #cf7500;
 }
