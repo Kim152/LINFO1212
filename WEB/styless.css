@@ -228,3 +228,62 @@
 	text-decoration: none;
 	color: #cf7500;
 }
+
+.navbar-text{
+	color: #fff;
+	background: #cf7500;
+	border-radius: 24px;
+	padding: 5px 10px;
+	text-align: center;
+	margin-right: 15px;
+	margin-top: 5px;
+}
+
+.list.form-inline{
+	margin-right: 30px;
+	margin-top: 5px;
+}
+
+.menu .list-container .lists .form-inline .text{
+	padding: 3px 5px 3px 5px;
+	outline: :none;
+	font-size: 18px;
+	border-radius: 24px;
+	color: #cf7500;
+	border:4px solid #cf7500 ;
+	margin-right: 8px;
+}
+
+.form-inline .btn{
+	margin-right: 25px;
+	border-radius: 24px;
+	background: #cf7500;
+	color: #fff;
+	border:none;
+	outline: none;
+	width: 90px;
+	height: 30px;
+	font-size: 18px;
+	transition: 0.5s;
+}
+
+.form-inline .btn:hover{
+	background:#ffaa71;
+}
+
+
+.welcome .titre1{
+	font-size: 50px;
+}
+
+textarea {
+	width: 60%;
+	min-height: 75px;
+	margin-top: 8px;
+	resize: none;
+	border-radius: 8px;
+	border: 1px solid #ddd;
+	padding: 0.5rem;
+	color: #666;
+	box-shadow: inset 0 0 0.25rem #ddd;
+  }
