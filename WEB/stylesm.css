@@ -34,6 +34,8 @@ div#centre {
 
  }
 
+
+
  p1{
 	color : white;
 
@@ -192,6 +194,7 @@ div#centre {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+
 }
 .acerca-de .info h1{
 	font-size: 50px;
@@ -200,4 +203,5 @@ div#centre {
 	text-align: center;
 	margin-bottom: 20px;
 }
+
 

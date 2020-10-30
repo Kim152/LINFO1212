@@ -1,0 +1,26 @@
+{
+  "name": "linfo1212",
+  "version": "1.0.0",
+  "description": "server",
+  "main": "app.js",
+  "dependencies": {
+    "consolidate": "^0.16.0",
+    "express": "^4.17.1",
+    "hogan": "^1.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kim152/LINFO1212.git"
+  },
+  "author": "Kim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kim152/LINFO1212/issues"
+  },
+  "homepage": "https://github.com/Kim152/LINFO1212#readme"
+}
