@@ -39,12 +39,12 @@
 			<div class="login-container">
 				<div class="register">
 					<h2>Registrer</h2>
-					<form action="">
-						<input type="text" placeholder="UserName" class="UserName">
-						<input type="password" placeholder="Mode-passe" class="Mode-passe">
-						<input type="text" placeholder="Nom" class="Nom">
-						<input type="text" placeholder="Prenom" class="Prenom">
-						<input type="text" placeholder="e-mail" class="e-mail">
+					<form action="/identification" method="POST">
+						<input type="text" name = 'user'placeholder="UserName" class="UserName">
+						<input type="password" name="password" placeholder="Mode-passe" class="Mode-passe">
+						<input type="text" name="nom" placeholder="Nom" class="Nom">
+						<input type="text" name="prenom" placeholder="Prenom" class="Prenom">
+						<input type="text" name="mail" placeholder="e-mail" class="e-mail">
 						<input type="submit" class="submit" value="Loging">
 					</form>
 				</div>
