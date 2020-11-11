@@ -10,10 +10,13 @@ const session = require('express-session');
 const consolidate = require('consolidate');
 const app = express ();
 
-
+require('./WEB/passport/password')(passport);
+require('./database')
 const {url} = require('../LINFO1212/database');
 const morgan = require('morgan');
-mongoose.connect(url,{ useNewUrlParser: true , useUnifiedTopology: true });
+const { Passport } = require('passport');
+mongoose.connect(url,{ useNewUrlParser: true , useUnifiedTopology: true })
+    .then(db => console.log('database connected'));
 
 //require('./WEB/confi/database')(passport);
 
@@ -28,14 +31,41 @@ app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded());
 app.use(session({
-    secret: 'projet'
+    secret: 'projet',
+    resave: false,
+    saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
 //routes
-app.use('/', require('./WEB/app/routes'));
+app.get('/',(req,res) =>{
+    res.render('index.html');
+});
+
+app.get('/identification',(req,res)=>{
+    res.render('identification.html');
+});
+
+app.get('/summit',(req,res) =>{
+    res.render('Page2.html')
+})
+
+//app.post('identification', passport.authenticate(''))
+
+app.post('/identification', passport.authenticate('local-signup',{
+    successRedirect :'/index.html',
+    failureRedirect: '/identification.html',
+    passReqToCallback: true
+}));
+
+app.post('/identification', passport.authenticate('local-signin', {
+    successRedirect: '/Page2.html',
+    failureRedirect: '/idetification.html',
+    failureFlash: true
+  }));
+
 // static files 
 app.use(express.static('./WEB/public')) 
 
