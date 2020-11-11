@@ -25,14 +25,29 @@
 				<input type="text" name="search" placeholder="chercher" class="src" autocomplete="off">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 			</div>
+
+			<script>
+			if (user){
 			<div class="list-container">
     			<ul class="lists">
-    				<li><a href="index.html" class="active">Home</a></li>
+    				<li><a href="/" class="active">Home</a></li>
     				<li><a href="#">Actualités</a></li>
         			<li><a href="#">Contact</a></li>
-        			<li><a href="identification.html">S'identifier</a></li>
+        			<li><a href="/user">Welcome</a></li>
+    			</ul>
+			 </div>}
+			 
+			</script>
+
+			 <div class="list-container">
+    			<ul class="lists">
+    				<li><a href="/" class="active">Home</a></li>
+    				<li><a href="#">Actualités</a></li>
+        			<li><a href="#">Contact</a></li>
+        			<li><a href="/user">S'identifier</a></li>
     			</ul>
 			 </div>
+			
 		</nav>
 		<!-- Header -->
 		<div class = "img-header">
@@ -49,9 +64,9 @@
 				</div>
 			</div>
 
-				<h1>Everything you can imagine is real.</h1>
+				<h1>Inserer un nouvel incident.</h1>
 				
-				<button type="button" onclick="window.open('Page2.html')">New story ?</button>
+				<button type="button" onclick="window.open('Page2.html')">Incident</button>
 			
 			</div>
 		</div>
@@ -62,36 +77,49 @@
 	<section class="acerca-de">
 		<div class="info"> 
 			
-			<h1>Dream destination </h1>
+			<h1>Incidents </h1>
 
         </div>
     </section>
+<pre>
+	{{data}}
+</pre>
 
-    <!--carts-->
-    <div class="container">
-    <!--cart1-->
-        <div class="card">
-            <img src="img/img1 (1).jpg">
-            <h1>Incident 1</h1>
-            <p>Description</p>
-            <a href="#">plus</a>
-        </div>
-    <!--cart2-->
-            <div class="card">
-            <img src="img/img1 (2).jpg">
-            <h1>Incident 2</h1>
-            <p>Description</p>
-            <a href="#">plus</a>
-        </div>
-    <!--cart3-->
-            <div class="card">
-            <img src="img/img1 (3).jpg">
-            <h1>Incident 3</h1>
-            <p>Description</p>
-            <a href="#">plus</a>
-        </div>
-        
-    </div>
+<script>
+	for(data in data )
+</script>
+	
+<table class="table">
+	<caption>List of incidents</caption>
+	<thead>
+	  <tr>
+		<th scope="col">#</th>
+		<th scope="col">Title</th>
+		<th scope="col">Description</th>
+		<th scope="col">Date</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr>
+		<th scope="row">1</th>
+		<td>{{data.title}}</td>
+		<td>{{data.description}}</td>
+		<td>@mdo</td>
+	  </tr>
+	  <tr>
+		<th scope="row">2</th>
+		<td>{{title}}</td>
+		<td>Thornton</td>
+		<td>@fat</td>
+	  </tr>
+	  <tr>
+		<th scope="row">3</th>
+		<td>Larry</td>
+		<td>the Bird</td>
+		<td>@twitter</td>
+	  </tr>
+	</tbody>
+  </table>
 </main>
 	
 <!--scripts-->

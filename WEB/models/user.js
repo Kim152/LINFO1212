@@ -1,14 +1,14 @@
-const mongoose = require('mongoose');
+
 const bcrypt = require('bcrypt');
 const {Schema,model} = require('mongoose');
 
 
 const userSchema = new Schema({
-       user: String,
-       password: String,
-       nom: String,
-       prenom: String,
-       mail: String
+       user: {type:String},
+       password: {type:String},
+       nom: {type:String},
+       prenom: {type:String},
+       mail: {type:String},
 });
 
 
@@ -24,4 +24,4 @@ userSchema.methods.validatepassword = async function(password){
 }
 
 
-module.exports = model('user',userSchema);
+module.exports = model('User',userSchema);

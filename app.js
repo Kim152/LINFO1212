@@ -3,68 +3,112 @@ const path = require('path'); //me ayuda a manejar las rutas del servidor
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose'); //permet de manipuler mongo db
 const passport = require('passport'); // permettre identifier un user
-const flash = require('connect-flash');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const session = require('express-session');
 const consolidate = require('consolidate');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
+//Init
 const app = express ();
 
-require('./WEB/passport/password')(passport);
 require('./database')
-const {url} = require('../LINFO1212/database');
-const morgan = require('morgan');
-const { Passport } = require('passport');
-mongoose.connect(url,{ useNewUrlParser: true , useUnifiedTopology: true })
-    .then(db => console.log('database connected'));
-
-//require('./WEB/confi/database')(passport);
-
-// configurations
-app.use(express.static('WEB')) 
+//configurations
+app.use(express.static('./WEB/public')) 
 app.engine('html', consolidate.hogan)
 app.set('views','./WEB/public')
 
-// Middlewares
-app.use(morgan('dev'));
+//middlewares
 app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded());
 app.use(session({
-    secret: 'projet',
-    resave: false,
-    saveUninitialized: false
+    secret: 'projet'
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+//models
+
+const Incident = require('./WEB/models/incidents');
+const { notEqual } = require('assert');
+const { Strategy, use } = require('passport');
+
 //routes
-app.get('/',(req,res) =>{
-    res.render('index.html');
-});
-
-app.get('/identification',(req,res)=>{
-    res.render('identification.html');
-});
-
-app.get('/summit',(req,res) =>{
-    res.render('Page2.html')
+app.get('/index',(req,res)=>{
+  res.render('index.html')
 })
 
-//app.post('identification', passport.authenticate(''))
 
-app.post('/identification', passport.authenticate('local-signup',{
-    successRedirect :'/index.html',
-    failureRedirect: '/identification.html',
-    passReqToCallback: true
-}));
+app.get('/identification',(req,res)=>{
+    res.render('identification.html',{
+        message: req.flash('loginmessage')
+    });
+});
 
-app.post('/identification', passport.authenticate('local-signin', {
-    successRedirect: '/Page2.html',
-    failureRedirect: '/idetification.html',
-    failureFlash: true
+//routesinsidents
+
+app.get('/incident',(req,res) =>{
+    res.render('Page2.html');
+})
+
+app.post('/newincident', async(req,res) =>{
+    const{title,description} = req.body;
+    const newNote = new Incident({title,description})
+    console.log(newNote)
+    await newNote.save()
+    const data = await Incident.find();
+    res.render('index.html',{data});
+})
+//user
+
+
+app.get('/user',(req,res) =>{
+    res.render('identification.html');
+})
+
+app.post('/identification', async(req,res) =>{
+    const {user,password,nom,prenom,mail} = req.body;
+    const newUser = new User({user,password,nom,prenom,mail});
+    newUser.passport = await newUser.generatepassword(password);
+    console.log(newUser)
+    await newUser.save();
+    res.redirect('/user')
+})
+//usermodel
+const User = require('./WEB/models/user')
+//use passport
+const LocalStrategy = require('passport-local').Strategy;
+
+passport.use('login',new LocalStrategy({
+    usernameField: 'user'
+  }, async (user, password, done) => {
+    // Match Email's User
+    const check = await User.findOne({user: user});
+    if (!check) {
+      return done(null, false, { message: 'Not User found.' });
+    } else {
+      
+      const match = await User.findOne({password: password});
+      if(match) {
+        return done(null, user);
+      } else {
+        return done(null, false, { message: 'Incorrect Password.' });
+      }
+    }
   }));
+passport.serializeUser((user, done) => {
+    done(null, user);
+  });
+  
+  passport.deserializeUser((user, done) => {
+   done(null,user)
+  });
+
+app.post('/login',passport.authenticate('login',{
+    successRedirect: '/index',
+    failureRedirect: '/identification'
+}));
 
 // static files 
 app.use(express.static('./WEB/public')) 

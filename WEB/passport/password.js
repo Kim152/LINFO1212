@@ -20,16 +20,14 @@ module.exports = function (passport) {
 passport.use('local-signup', new LocalStrategy({
     usernameField: 'user',
     passwordField : 'password',
-    nomField: 'nom',
-    prenomField: 'prenom',
-    mailField: 'mail',
     passReqToCallback: true
-}, async (req,user,password,nom,prenom,mail,done) => {
+}, async (req,user,password,done) => {
     const newUser = new User();
     newUser.user = user;
-    newUser.password = newUser.generate(password);
-    console.log(newUser)
+    newUser.password = newUser.generatepassword(password);
     await newUser.save();
     done(null,newUser);
 }));
+
+
 }

@@ -38,10 +38,15 @@
 	<div class="boit">
 		<h1>Signaler un nouvel incident</h1>
 		<p>Description de l'incident :</p>
-		<textarea name="the-textarea" id="the-textarea" maxlength="300" placeholder="Commence à écrire..."autofocus></textarea>
+		<form action="/newincident" method="POST">
+		<textarea name="title" id="the-textarea" maxlength="300" placeholder="Commence à écrire..."autofocus></textarea>
 		<p>Adresse de l'incident :</p>
-		<textarea name="the-textarea" id="the-textarea" maxlength="300" placeholder="Commence à écrire..."autofocus></textarea>
-		<input type="submit" class="submit" value="Sumetre">
+		<textarea name="description" id="the-textarea" maxlength="300" placeholder="Commence à écrire..."autofocus></textarea>
+		<button type="submit">
+			Sumetre
+		</button>
+		
+	</form>
 	</div>
 
 

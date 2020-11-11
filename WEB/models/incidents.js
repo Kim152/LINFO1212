@@ -1,7 +1,7 @@
-const {Schema , mode1} = require('mongoose');
-const { model } = require('./user');
+const {Schema, model} = require('mongoose');
 
-const Incident = new Schema({
+
+const IncidentSchema = new Schema({
     title:{
         type: String,
         require: true
@@ -17,5 +17,4 @@ const Incident = new Schema({
     },{
         timestamps: true 
 })
-
- module.export = model('incident',Incident);
+module.exports = model('Incident',IncidentSchema);
