@@ -1,24 +1,42 @@
 const express = require('express');
-const path = require('path'); //me ayuda a manejar las rutas del servidor 
-const bcrypt = require('bcrypt');
-const mongoose = require('mongoose'); //permet de manipuler mongo db
+const path = require('path'); //me ayuda a manejar las rutas del servidor  //permet de manipuler mongo db
 const passport = require('passport'); // permettre identifier un user
 const bodyParser = require('body-parser');
 const consolidate = require('consolidate');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const morgan = require('morgan')
+const multer = require('multer') //modulo para subir imagenes
+const {format} = require('timeago.js')
+
+
 //Init
 const app = express ();
 
 require('./database')
+
+
+
 //configurations
+
 app.use(express.static('./WEB/public')) 
 app.engine('html', consolidate.hogan)
 app.set('views','./WEB/public')
+app.set('view engine', 'ejs')
+
 
 //middlewares
 app.use(express.urlencoded({extended:false}));
+
+const storage = multer.diskStorage({
+  destination: path.join(__dirname,'/WEB/public/news/img'),
+  filename: (req,file,cb,filename) =>{
+    cb(null, file.originalname);
+  }
+});
+app.use(multer({storage: storage}).single('image'));
+app.use(morgan('dev'))
 app.use(cookieParser());
 app.use(bodyParser.urlencoded());
 app.use(session({
@@ -28,6 +46,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+//time
+app.use((req,res,next)=>{
+  app.locals.format = format;
+  next();
+})
+
 //models
 
 const Incident = require('./WEB/models/incidents');
@@ -35,9 +59,13 @@ const { notEqual } = require('assert');
 const { Strategy, use } = require('passport');
 
 //routes
-app.get('/index',(req,res)=>{
-  res.render('index.html')
-})
+app.get('/', async(req,res) =>{
+  const data = await Incident.find();
+  const userdata = await User.find();
+  console.log(data);
+  res.render('index',{
+    data });
+});
 
 
 app.get('/identification',(req,res)=>{
@@ -48,23 +76,25 @@ app.get('/identification',(req,res)=>{
 
 //routesinsidents
 
-app.get('/incident',(req,res) =>{
-    res.render('Page2.html');
+app.get('/new',(req,res) =>{
+    res.render('Page2');
 })
 
 app.post('/newincident', async(req,res) =>{
-    const{title,description} = req.body;
-    const newNote = new Incident({title,description})
-    console.log(newNote)
-    await newNote.save()
-    const data = await Incident.find();
-    res.render('index.html',{data});
-})
-//user
+    const newNote = new Incident(req.body);
+    newNote.filename = req.file.filename;
+    newNote.path = './news/img/' + req.file.filename;
+    newNote.create_at = req.file.create_at
+    await newNote.save();
+    console.log(newNote);
+    res.redirect('/');
+    
+});
+
 
 
 app.get('/user',(req,res) =>{
-    res.render('identification.html');
+    res.render('identification');
 })
 
 app.post('/identification', async(req,res) =>{
@@ -73,10 +103,11 @@ app.post('/identification', async(req,res) =>{
     newUser.passport = await newUser.generatepassword(password);
     console.log(newUser)
     await newUser.save();
-    res.redirect('/user')
 })
 //usermodel
-const User = require('./WEB/models/user')
+const User = require('./WEB/models/user');
+
+
 //use passport
 const LocalStrategy = require('passport-local').Strategy;
 
@@ -106,12 +137,18 @@ passport.serializeUser((user, done) => {
   });
 
 app.post('/login',passport.authenticate('login',{
-    successRedirect: '/index',
+    successRedirect: '/',
     failureRedirect: '/identification'
 }));
 
+//global variable
+
+app.use((req,res,next)=>{
+  res.locals.userid = req.user || null;
+  next();
+})
+
 // static files 
-app.use(express.static('./WEB/public')) 
 
 // server run 
 app.listen(8080);

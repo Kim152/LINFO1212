@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang= "es">
+<head>
+
+	<title>Summision</title>
+</head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+	<link rel="stylesheet" type="text/css" href="styless.css">
+	<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<body>
+	<header id= " header"> 
+		<nav class= "menu ">
+			<div class="logo-box">
+                <img src="logo/final.png" >
+				<span class="btn-menu"><i class="fas fa-bars"></i></span>
+			</div>
+			<div class="seach">
+				<input type="text" name="search" placeholder="chercher" class="src" autocomplete="off">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</div>
+			<div class="list-container">
+    			<ul class="lists">
+    				<li><a href="index.html" class="active">Home</a></li>
+    				<li><a href="#">Actualités</a></li>
+        			<li><a href="#">Contact</a></li>
+        			<li><a href="identification.html">Utilizateur</a></li>
+    			</ul>
+			 </div>
+		</nav>
+	</header>
+	</body>
+
+	<div class="boit">
+		<h1>Signaler un nouvel incident</h1>
+		<p>Description de l'incident :</p>
+		<form action="/newincident" method="POST" enctype="multipart/form-data">
+		<input name="title"  maxlength="300" placeholder="Commence à écrire..."autofocus></input>
+		<p>Adresse de l'incident :</p>
+		<input name="description"  maxlength="300" placeholder="Commence à écrire..."autofocus></input>
+		<input type="file" name="image"></input>
+		<br>
+		<button type="submit">
+			Sumetre
+		</button>
+	</div> </form>
+
+
+	</div>
+</head>
+</html>

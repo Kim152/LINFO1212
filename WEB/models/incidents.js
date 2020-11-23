@@ -1,4 +1,5 @@
 const {Schema, model} = require('mongoose');
+const { create } = require('./user');
 
 
 const IncidentSchema = new Schema({
@@ -10,11 +11,12 @@ const IncidentSchema = new Schema({
         type: String,
         require: true
     },
-    autor:{
+    filename:{
         type: String,
         require: true
-    }
-    },{
-        timestamps: true 
-})
+    },
+    create_at: {type: Date, default: Date.now()
+    },
+    path: {type: String},
+    });
 module.exports = model('Incident',IncidentSchema);
