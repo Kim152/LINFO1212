@@ -24,6 +24,7 @@ app.use(express.static('./WEB/public'))
 app.engine('html', consolidate.hogan)
 app.set('views','./WEB/public')
 app.set('view engine', 'ejs')
+require('../LINFO1212/WEB/passport/password')
 
 
 //middlewares
@@ -40,7 +41,9 @@ app.use(morgan('dev'))
 app.use(cookieParser());
 app.use(bodyParser.urlencoded());
 app.use(session({
-    secret: 'projet'
+    secret: 'proyecto',
+    resave: false,
+    saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -62,17 +65,10 @@ const { Strategy, use } = require('passport');
 app.get('/', async(req,res) =>{
   const data = await Incident.find();
   const userdata = await User.find();
-  console.log(data);
   res.render('index',{
     data });
 });
 
-
-app.get('/identification',(req,res)=>{
-    res.render('identification.html',{
-        message: req.flash('loginmessage')
-    });
-});
 
 //routesinsidents
 
@@ -86,14 +82,12 @@ app.post('/newincident', async(req,res) =>{
     newNote.path = './news/img/' + req.file.filename;
     newNote.create_at = req.file.create_at
     await newNote.save();
-    console.log(newNote);
     res.redirect('/');
     
 });
 
 
-
-app.get('/user',(req,res) =>{
+app.get('/identification',(req,res) =>{
     res.render('identification');
 })
 
@@ -103,16 +97,17 @@ app.post('/identification', async(req,res) =>{
     newUser.passport = await newUser.generatepassword(password);
     console.log(newUser)
     await newUser.save();
+    res.render('login')
 })
 //usermodel
 const User = require('./WEB/models/user');
 
-
 //use passport
-const LocalStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy; //password
 
-passport.use('login',new LocalStrategy({
-    usernameField: 'user'
+passport.use('login',new LocalStrategy({ 
+    usernameField: 'user',//atraves de que dato se identifica 
+    passportField: 'password'
   }, async (user, password, done) => {
     // Match Email's User
     const check = await User.findOne({user: user});

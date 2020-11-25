@@ -1,23 +1,20 @@
 //password
 const passport = require('passport');
-const { emit } = require('../models/user');
 const LocalStrategy = require('passport-local').Strategy;
 
 
 const User = require('../models/user');
 
-module.exports = function (passport) {
-    passport.serializeUser(function(user,done){
+    passport.serializeUser ((user,done) =>{
         done(null, user.id);
     });
     
-    passport.deserializeUser(function (id, done) {
-        User.findById(id, function (err, user) {
-          done(err, user);
-        });
-      });
+    passport.deserializeUser(async (id, done) => {
+        const user = await User.findById(id);
+        done(null, user);
+    });
 
-passport.use('local-signup', new LocalStrategy({
+passport.use('login', new LocalStrategy({
     usernameField: 'user',
     passwordField : 'password',
     passReqToCallback: true
@@ -28,6 +25,3 @@ passport.use('local-signup', new LocalStrategy({
     await newUser.save();
     done(null,newUser);
 }));
-
-
-}
