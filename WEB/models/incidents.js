@@ -15,6 +15,10 @@ const IncidentSchema = new Schema({
         type: String,
         require: true
     },
+    autor:{
+        type: String,
+        required: true
+    },
     create_at: {type: Date, default: Date.now()
     },
     path: {type: String},
