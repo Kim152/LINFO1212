@@ -218,11 +218,15 @@ app.post('/login',passport.authenticate('login',{
   failureRedirect:( '/identification')
 }));
 
+//logout
+
+app.get('/logout',(req,res)=>{
+  req.logOut();
+  res.redirect('/start')
+})
+
+
 // seach
-
-
-
-
 app.get('/seach',async(req,res) =>{
   let search = req.query
   await Incident.find( { $text: { $search: search.search}},
