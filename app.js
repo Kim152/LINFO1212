@@ -57,10 +57,12 @@ app.use((req,res,next)=>{
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
   next();
+ 
 });
 app.use((req,res,next)=>{
   app.locals.format = format;
   next();
+  
 })
 
 //models
@@ -218,24 +220,26 @@ app.post('/login',passport.authenticate('login',{
 
 // seach
 
-db.collection("incidents").createIndex[{subject: "text"}]
 
-/**app.post('/seach',async(req,res,next) =>{
-  try{
-    const seach = await db.collection("incidents").find( { $text: { $search: "kim" } } )
-    seach.then (function(resukt){
-      console.log(resukt)
-    })
-  }catch (error){
-      res.send('Not found')
-    }
-})**/
+
+
+app.get('/seach',async(req,res) =>{
+  let search = req.query
+  await Incident.find( { $text: { $search: search.search}},
+  function(err,docs){
+    res.render('results',{docs})
+  });
+});
+
 
 //global variable
 
-const seach = db.collection("incidents").find( { $text: { $search: "kim" } } )
-seach.then (function(resukt){
-  console.log(resukt)});
+process.on('unhandledRejection', (reason, promise) => {
+  console.log('Unhandled Rejection at:', promise, 'reason:', reason);
+  // Application specific logging, throwing an error, or other logic here
+});
+
+
 // static files 
 
 // server run 
