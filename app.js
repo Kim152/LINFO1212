@@ -83,8 +83,49 @@ app.get('/', checkAuthenticated,async(req,res) =>{
 app.get('/contact', checkAuthenticated,async(req,res) =>{
   res.render('contact');
 })
-
+// help
+app.get('/help', checkAuthenticated,async(req,res) =>{
+  const data = await Incident.find();
+  res.render('help',{
+    data,
+    name  : req.user}
+    );
+})
 //routesinsidents
+
+app.get('/mail', checkAuthenticated,async(req,res) =>{
+    res.render('index',{name  : req.user});
+})
+
+app.post('/mail', async(req,res) =>{
+    var nodemailer = require('nodemailer');
+
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'abrahamlicorne15@gmail.com',
+        pass: '9J9cH7xTh'
+      }
+    });
+
+    var mailOptions = {
+      from: 'abrahamlicorne15@gmail.com',
+      to: 'maxime.devillet01@gmail.com',
+      subject: 'Sending Email using Node.js',
+      text: 'That was easy!'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info2){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info2.response);
+      }
+
+
+    });
+    
+});
 
 app.get('/add', checkAuthenticated,async(req,res) =>{
     res.render('Page2',{name  : req.user});
@@ -103,7 +144,6 @@ app.post('/add', async(req,res) =>{
     res.redirect('/');
     
 });
-
 
 app.get('/identification',(req,res) =>{
   const errors = [];
@@ -234,6 +274,7 @@ app.get('/seach',async(req,res) =>{
     res.render('results',{docs})
   });
 });
+
 
 
 //global variable
