@@ -25,17 +25,20 @@
 				<span class="btn-menu"><i class="fas fa-bars"></i></span>
 			</div>
 			<div class="seach">
+				<form action="/seach" method="GET" >
 				<input type="text" name="search" placeholder="chercher" class="src" autocomplete="off">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form>
 			</div>
 	
 			<div class="list-container">
 				<ul class="lists">
 					<li><a href="/" class="active">Home</a></li>
-					<li><a href="#">Actualités</a></li>
-					<li><a href="#">Contact</a></li>
+					<li><a href="help">Help</a></li>
+					<li><a href="contact">Contact</a></li>
 					<li><a class="icon icon-user1" href="#">  <%= name %> </a></li>
-					
+					<li><a href="/logout">Logout</a></li>
+
 				</ul>
 			</div>
 	
@@ -47,16 +50,16 @@
 
 	<div class="boit">
 		
-		<h1>Signaler un nouvel incident </h1>
-		<p>Description de l'incident :</p>
+		<h1>Add a new destination</h1><br><br>
+		<p>Place of travel and purpose of travel (example: Paris: guided tour):</p>
 		<form action="/add" method="POST" enctype="multipart/form-data">
-		<input name="title"  maxlength="300" placeholder="Commence à écrire..."autofocus></input>
-		<p>Adresse de l'incident :</p>
-		<input name="description"  maxlength="300" placeholder="Commence à écrire..."autofocus></input>
+		<input name="title"  maxlength="300" placeholder="Commence à écrire..."autofocus></input><br><br><br><br>
+		<p>description of your trip and what you want to tell:</p>
+		<input name="description"  maxlength="300" placeholder="Commence à écrire..."autofocus></input><br><br><br><br>
 		<input type="file" name="image"></input>
 		<br>
 		<button type="submit">
-			Sumetre
+			Submit
 		</button>
 	</div> </form>
 

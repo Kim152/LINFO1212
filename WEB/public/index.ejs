@@ -39,7 +39,7 @@
 			<div class="list-container">
 				<ul class="lists">
 					<li><a href="/" class="active">Home</a></li>
-					<li><a href="#">Actualités</a></li>
+					<li><a href="help">Help</a></li>
 					<li><a href="contact">Contact</a></li>
 					<li><a class="icon icon-user1" href="#">  <%= name %> </a></li>
 					<li><a href="/logout">Logout</a></li>
@@ -66,10 +66,19 @@
 
 			<h1>Help us explore the world </h1>
 			<form action="/add" method="GET">
-				<input type="submit" value="A New Place ? "></input>
-				</from>
+				<input type="submit" value="Add new +"></input>
+			</form>
+			<br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+
+			
+			<h1>envoi nous ton message</h1>
+			<textarea name="message"></textarea>
+			<form action="/mail" method="POST">
+				<input type="submit"></input>
+			</form>
 		</div>
 	</div>
+	</body>
 	</header>
 	<main>
 
