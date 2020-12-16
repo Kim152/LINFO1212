@@ -9,13 +9,22 @@ const flash = require('connect-flash')
 const morgan = require('morgan')
 const multer = require('multer') //modulo para subir imagenes
 const {format} = require('timeago.js')
+const socketio = require('socket.io')
+const http = require('http')
+const methodOverride = require("method-override");
+
+
+
 
 
 //Init
 const app = express ();
-
 require('./database')
 
+
+// server run 
+const server = app.listen(8080)
+const io = socketio(server).sockets;
 
 
 //configurations
@@ -24,7 +33,9 @@ require('./database')
 app.engine('html', consolidate.hogan)
 app.set('views','./WEB/public')
 app.set('view engine', 'ejs')
+
 app.use(express.static('./WEB/public')) 
+
 
 
 
@@ -49,7 +60,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-
+app.use(methodOverride("_method"));
 //time
 app.use((req,res,next)=>{
   res.locals.text = req.flash('text');
@@ -79,11 +90,21 @@ app.get('/', checkAuthenticated,async(req,res) =>{
     name  : req.user}
     );
 });
+// remder publications for user 
+app.get('/user', checkAuthenticated,async(req,res) =>{
+  const data = await Incident.find({autor: req.user}).sort({create_at: 'desc'});
+  res.render('userfile.ejs',{
+    data,
+    name  : req.user}
+    );
+});
 // contact 
 app.get('/contact', checkAuthenticated,async(req,res) =>{
   res.render('contact');
 })
+
 // help
+
 app.get('/help', checkAuthenticated,async(req,res) =>{
   const data = await Incident.find();
   res.render('help',{
@@ -91,6 +112,8 @@ app.get('/help', checkAuthenticated,async(req,res) =>{
     name  : req.user}
     );
 })
+
+
 //routesinsidents
 
 app.get('/mail', checkAuthenticated,async(req,res) =>{
@@ -187,8 +210,7 @@ app.post('/identification', async(req,res,done) =>{
     const newUser = new User({user,password,nom,prenom,mail});
     newUser.passport = await newUser.generatepassword(password);
     await newUser.save();
-    req.flash('msg', 'Welcome');
-    console.log('msg')
+    req.flash('text', 'Welcome');
     res.redirect('/start');
   }
 });
@@ -265,6 +287,41 @@ app.get('/logout',(req,res)=>{
   res.redirect('/start')
 })
 
+//deleat a cart
+
+app.delete('/delete/:id',async(req,res) =>{
+  await Incident.findByIdAndDelete(req.params.id)
+  res.redirect('/user')
+})
+
+//edit a cart
+
+/*app.get('/edit/:id', async(req, res) =>{
+  const cart = await Incident.findById(req.params.id)
+  res.render('edit',{
+    cart
+  })
+});
+
+app.put('/edittrip/:id') , async (req, res) => {
+  const {path} = req.body
+  const save = await Incident.find(req.params.path)
+  console.log(save)
+  res.send('go');
+};
+**/
+
+// chat websockets
+
+io.on('connection', (socket) =>{
+  var data = db.collection('data')
+  socket.on('chat:message',(data) =>{
+    io.emit('chat:message', data)
+  })
+});
+
+
+
 
 // seach
 app.get('/seach',async(req,res) =>{
@@ -276,6 +333,9 @@ app.get('/seach',async(req,res) =>{
 });
 
 
+app.get('/like',(req,res) =>{
+});
+
 
 //global variable
 
@@ -285,7 +345,3 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 
 
-// static files 
-
-// server run 
-app.listen(8080);

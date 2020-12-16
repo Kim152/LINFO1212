@@ -464,6 +464,7 @@
 .boit .submit {
 	display: flex;
 	width: auto;
+	border-color: #f0a500;
 	margin-right: 25px;
 	 border-radius: 8px;
 	 background:#ffaa71;

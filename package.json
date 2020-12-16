@@ -10,6 +10,7 @@
     "connect-flash": "^0.1.1",
     "consolidate": "^0.16.0",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "ejs": "^3.1.5",
     "expess": "0.0.1-security",
     "express": "^4.17.1",
@@ -23,12 +24,13 @@
     "npm-check-updates": "^10.0.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "socket.io": "^3.0.4",
     "timeago.js": "^4.0.2"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",

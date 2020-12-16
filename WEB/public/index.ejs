@@ -41,7 +41,7 @@
 					<li><a href="/" class="active">Home</a></li>
 					<li><a href="help">Help</a></li>
 					<li><a href="contact">Contact</a></li>
-					<li><a class="icon icon-user1" href="#">  <%= name %> </a></li>
+					<li><a class="icon icon-user1" href="/user">  <%= name %> </a></li>
 					<li><a href="/logout">Logout</a></li>
 
 				</ul>
@@ -68,14 +68,7 @@
 			<form action="/add" method="GET">
 				<input type="submit" value="Add new +"></input>
 			</form>
-			<br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
-
 			
-			<h1>envoi nous ton message</h1>
-			<textarea name="message"></textarea>
-			<form action="/mail" method="POST">
-				<input type="submit"></input>
-			</form>
 		</div>
 	</div>
 	</body>
@@ -88,6 +81,20 @@
 				<h1> The traveling community is a new expirence</h1>
 				<p>Here you will find experiences of travelers like you who have found a fascinating place in the world.</p>
 				<p>Surely you also want to share your experience, if so tell us. Click on the button "A new Place ? "button and add your travel experience.</p>
+
+			</div>
+			<button class="open-button" onclick="openForm()"><i class="fas fa-comments"></i></button>
+			<div class="chat-popup" id="myForm">
+				<form action="" class="from-container">
+					<h2>We can help you </h2>
+					<p> Messages </p>
+					<div id="output"></div>
+					<input class="msg-text" id="msg" required placeholder="Enter Your Msg"></input>
+					<input type="text" id="username" required placeholder="Nickname"></input>
+					<button id="send" type="submit" class="btn">submit</button>
+					<button class="btn cancel" onclick="closeForm()">close</button>
+				</form>
+			</div>
 
 			</div>
 		</section>
@@ -103,14 +110,42 @@
 				<p><%= data[i].description%></p>
 				<p>Create by : <%= data[i].autor%></p>
 				<a href="#"><%= format(data[i].create_at)%></a>
+			<from action="/like" method = "get">
+			<div class="voting">
+				<button id="btn-like"><i class="fas fa-heart"></i></button>
+				<input type="number" id="input1" value="0" ></input>
+				<button id="btn-dislike">
+					<i class="fas fa-thumbs-down"></i>
+				</button>
+				<input type="number" id="input2" value="0">
+			</from>
 			</form>
+			
 		</div>
+		</div> 
 		<% } %>
 	</div>
 </section>
 
 
 	<!--scripts-->
+	<script>
+	function openForm(){
+		document.getElementById("myForm").style.display="block";
+	}
+	function closeForm(){
+		document.getElementById("myFrom").style.display="none";
+	}
+	</script>
+
+	<script
+	src="https://code.jquery.com/jquery-3.5.1.js"
+	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+	crossorigin="anonymous"></script>
+
 	<script src="https://kit.fontawesome.com/35db202371.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script	src="/js/chat.js" charset="utf-8"></script>
+	<script src="/js/likes.js" charset="utf-8"></script>
 
 </html>
