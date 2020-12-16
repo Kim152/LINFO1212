@@ -50,11 +50,11 @@
 	<div class="boit">
 		<h1>Edit your destination</h1>
 		<p>Place of travel and purpose of travel (example: Paris: guided tour):</p>
-		<form action="/edittrip/<%= cart.id %>?_method=PUT" method="POST">
-		<input type="hidden" name="_method" value="PUT">
+		<form action="/edittrip/<%= cart.id %>" method="POST" enctype="multipart/form-data">
 		<input name="title"  maxlength="300" value="<%= cart.title %>" ></input>
 		<p>Description of your trip and what you want to tell:</p>
 		<input name="description"  maxlength="300" value="<%= cart.description %>"></input>
+		<input type="file" name="image"></input>
 		<button type="submit">
 			Save </button>
 		</form>

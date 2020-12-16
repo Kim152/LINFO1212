@@ -296,20 +296,27 @@ app.delete('/delete/:id',async(req,res) =>{
 
 //edit a cart
 
-/*app.get('/edit/:id', async(req, res) =>{
+app.get('/edit/:id', async(req, res) =>{
   const cart = await Incident.findById(req.params.id)
+  await Incident.findByIdAndDelete(req.params.id)
   res.render('edit',{
     cart
   })
 });
 
-app.put('/edittrip/:id') , async (req, res) => {
-  const {path} = req.body
-  const save = await Incident.find(req.params.path)
-  console.log(save)
-  res.send('go');
-};
-**/
+
+app.post('/edittrip/:id', async(req,res) =>{
+
+  const newNote = new Incident(req.body);
+  newNote.filename = req.file.filename;
+  newNote.path = './news/img/' + req.file.filename;
+  newNote.create_at = req.file.create_at;
+  newNote.autor = req.user
+  await newNote.save();
+  console.log(newNote)
+  res.redirect('/user');
+  
+});
 
 // chat websockets
 
