@@ -11,6 +11,10 @@ const IncidentSchema = new Schema({
         type: String,
         require: true
     },
+    descriptionplus:{
+        type: String,
+        require: true
+    },
     filename:{
         type: String,
         require: true

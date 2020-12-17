@@ -36,7 +36,7 @@
 					<li><a href="/" class="active">Home</a></li>
 					<li><a href="help">Help</a></li>
 					<li><a href="contact">Contact</a></li>
-					<li><a class="icon icon-user1" href="#">  <%= name %> </a></li>
+					<li><a class="icon icon-user1" href="/user">  <%= name %> </a></li>
 					<li><a href="/logout">Logout</a></li>
 
 				</ul>
@@ -53,9 +53,11 @@
 		<h1>Add a new destination</h1>
 		<p>Place of travel and purpose of travel (example: Paris: guided tour):</p>
 		<form action="/add" method="POST" enctype="multipart/form-data">
-		<input name="title"  maxlength="300" placeholder="Commence à écrire..."autofocus></input>
+		<input name="title"  maxlength="100" placeholder="Commence à écrire..."autofocus></input>
 		<p>description of your trip and what you want to tell:</p>
-		<input name="description"  maxlength="300" placeholder="Commence à écrire..."autofocus></input>
+		<input name="description"  maxlength="200" placeholder="Commence à écrire..."autofocus></input>
+		<p>Detailed description</p>
+		<input name="descriptionplus" placeholder="Commence à écrire..."autofocus></input>
 		<input type="file" name="image"></input>
 		<button type="submit">
 			Submit </button>

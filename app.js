@@ -77,7 +77,7 @@ app.use((req,res,next)=>{
 })
 
 //models
-
+const Comment = require('./WEB/models/coments')
 const Incident = require('./WEB/models/incidents');
 const { notEqual } = require('assert');
 const { Strategy, use } = require('passport');
@@ -155,14 +155,12 @@ app.get('/add', checkAuthenticated,async(req,res) =>{
 })
 
 app.post('/add', async(req,res) =>{
-
     const newNote = new Incident(req.body);
     newNote.filename = req.file.filename;
     newNote.path = './news/img/' + req.file.filename;
     newNote.create_at = req.file.create_at;
     newNote.autor = req.user
     await newNote.save();
-    console.log(newNote)
     req.flash('msg','Incident add successfully')
     res.redirect('/');
     
@@ -284,7 +282,7 @@ app.post('/login',passport.authenticate('login',{
 
 app.get('/logout',(req,res)=>{
   req.logOut();
-  res.redirect('/start')
+  res.redirect('/')
 })
 
 //deleat a cart
@@ -294,19 +292,40 @@ app.delete('/delete/:id',async(req,res) =>{
   res.redirect('/user')
 })
 
+app.get('/plus/:id',checkAuthenticated, async (req,res) =>{
+  const data = await Incident.findById(req.params.id)
+  const comments = await Comment.find({userid:req.params.id})
+  console.log(comments)
+  res.render('description',{
+    comments,
+    data,
+    name: req.user
+  })
+})
+
+//add commentaire
+app.post('/comment/:id', async(req,res) =>{
+  const newComment = new Comment(req.body);
+  newComment.autor = req.user
+  newComment.userid = req.params.id
+  await newComment.save();
+  res.redirect('/plus/'+ req.params.id)
+});
+
+
 //edit a cart
 
-app.get('/edit/:id', async(req, res) =>{
+app.get('/edit/:id', checkAuthenticated,async(req, res) =>{
   const cart = await Incident.findById(req.params.id)
   await Incident.findByIdAndDelete(req.params.id)
   res.render('edit',{
-    cart
+    cart,
+    name  : req.user
   })
 });
 
 
-app.post('/edittrip/:id', async(req,res) =>{
-
+app.post('/edittrip/:id',checkAuthenticated, async(req,res) =>{
   const newNote = new Incident(req.body);
   newNote.filename = req.file.filename;
   newNote.path = './news/img/' + req.file.filename;
@@ -315,7 +334,6 @@ app.post('/edittrip/:id', async(req,res) =>{
   await newNote.save();
   console.log(newNote)
   res.redirect('/user');
-  
 });
 
 // chat websockets
@@ -350,5 +368,3 @@ process.on('unhandledRejection', (reason, promise) => {
   console.log('Unhandled Rejection at:', promise, 'reason:', reason);
   // Application specific logging, throwing an error, or other logic here
 });
-
-

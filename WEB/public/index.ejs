@@ -25,7 +25,7 @@
 	<header id=" header">
 		<nav class="menu ">
 			<div class="logo-box">
-				<img src="logo/final.png">
+				<img src="/logo/final.png">
 	
 				<span class="btn-menu"><i class="fas fa-bars"></i></span>
 			</div>
@@ -110,18 +110,11 @@
 				<p><%= data[i].description%></p>
 				<p>Create by : <%= data[i].autor%></p>
 				<a href="#"><%= format(data[i].create_at)%></a>
-			<from action="/like" method = "get">
-			<div class="voting">
-				<button id="btn-like"><i class="fas fa-heart"></i></button>
-				<input type="number" id="input1" value="0" ></input>
-				<button id="btn-dislike">
-					<i class="fas fa-thumbs-down"></i>
-				</button>
-				<input type="number" id="input2" value="0">
-			</from>
 			</form>
-			
-		</div>
+			<a href="/plus/<%= data[i].id %>">
+				<button type="submit">
+					<i class="fas fa-plus"></i>
+				</button></a>
 		</div> 
 		<% } %>
 	</div>
