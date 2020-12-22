@@ -1,4 +1,5 @@
 # LINFO1212
+![](screenshot/view.png)
 
 Le projet est un site internet interactif déveoppé dans le but de pouvoir lire les voyages des autres utilisateur et de raconter son propre voyage pour aider les autres utilisateurs à choisir le voyage qui leur convient le mieux
 
